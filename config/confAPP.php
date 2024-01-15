@@ -22,14 +22,14 @@ require_once 'core/231018libreriaValidacion.php';
 //Creamos un array asociativo para añadir los controladores
 $aControladores = [
     'inicioPublico' => 'controller/cInicioPublico.php',
-    //'login' => 'controller/cLogin.php',
+    'login' => 'controller/cLogin.php',
     //'inicioPrivado' => 'controller/cInicioPrivado.php',
     //'tecnologias' => 'controller/cTecnologias.php',
     //'rss' => 'controller/cRSS.php',
     //'registro' => 'controller/cRegistro.php',
     //'miCuenta' => 'controller/cMiCuenta.php',
     //'borrarCuenta' => 'controller/cBorrarCuenta.php',
-    //'wip' => 'controller/cWIP.php',
+    'wip' => 'controller/cWIP.php'
     //'error' => 'controller/cError.php'
 ];
 
@@ -37,13 +37,13 @@ $aControladores = [
 $aVistas = [
     'layout' => 'view/Layout.php',
     'inicioPublico' => 'view/vInicioPublico.php',
-    //'login' => 'view/vLogin.php',
+    'login' => 'view/vLogin.php',
     //'inicioPrivado' => 'view/vInicioPrivado.php',
     //'tecnologias' => 'view/vTecnologias.php',
     //'rss' => 'view/vRSS.php',
     //'registro' => 'view/vRegistro.php',
     //'miCuenta' => 'view/vMiCuenta.php',
     //'borrarCuenta' => 'view/vBorrarCuenta.php',
-    //'wip' => 'view/vWIP.php',
+    'wip' => 'view/vWIP.php'
     //'error' => 'view/vError.php'
 ];

@@ -1,8 +1,20 @@
-<h2>Login Logoff</h2>
+
+<link rel="stylesheet" href="./webroot/css/main.css" />
+<link rel="stylesheet" href="./webroot/css/loginLogOff.css" />
+<!-- Fuentes -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<title>Alvaro Cordero Miñambres - LoginLogoff</title>
+
+
+<h2 style="margin-top: 5%">Login Logoff</h2>
 <p>IES LOS SAUCES - BENAVENTE</p>
-<button type="button" class="btn btn-secondary btn-lg" style="background-color: #6b7280;">
-    <a href="./codigoPHP/Login.php" class="text-white text-decoration-none">LOGIN</a>
-</button>
+<form method="post" action="index.php">
+    <button class="btn btn-secondary text-white" type="submit" name="login"  style="background-color: #6b7280;">LOGIN</button>
+    <button class="btn btn-secondary text-white" type="submit" name="salir" style="background-color: red;">SALIR</button>
+</form>
+
 <br>
 <div>
     <a class="boton" href="?idioma=es">

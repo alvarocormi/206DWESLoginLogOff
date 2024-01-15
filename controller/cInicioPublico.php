@@ -8,7 +8,7 @@
  * 
  */
 
-// Si el usuario pulsa el botón 'Iniciar Sesión', mando al usuario a la página del login
+// Si el usuario pulsa el botón 'Login', mando al usuario a la página del login
 if(isset($_REQUEST['login'])){
     
     // Asigno a la pagina en curso la pagina de login
