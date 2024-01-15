@@ -34,10 +34,6 @@ $aErrores = [
  * La funcion isset() Determina si una variable está definida y no es null .
  */
 if (isset($_REQUEST['enviar'])) {
-    $_SESSION['paginaEnCurso'] = 'wip';
-    require_once $aControladores[$_SESSION['paginaEnCurso']];
-    exit();
-
     /**
      * Validamos el usuario 
      * Validamos la contrseña
@@ -163,10 +159,12 @@ if ($entradaOK) {
         //Se ejecuta la consulta de actualizacion
         $consultaActualizacion->execute();
 
+        $_SESSION['paginaEnCurso'] = 'inicioPrivado';
+
         /**
          * Redirigimos al usuario a la pagina Progama.php
          */
-        header("Location: Programa.php");
+        header("Location: index.php");
 
         /**
          * @link https://www.php.net/manual/function.exit.php
@@ -196,5 +194,7 @@ if ($entradaOK) {
 
     //Si el fromulario a sido enviado pero el usuario o contraseña no ha sido valdiado 
 } else {
+    
+    //Importamos la vista
     require_once $aVistas['layout'];
 }
