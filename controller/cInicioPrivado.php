@@ -10,20 +10,6 @@
  * 
  */
 
-//Comprobamos que el usuario esta guardado en la session
-if (empty($_SESSION['usuario'])) {
-    
-    // Redirige a la página de inicio
-    $_SESSION['paginaEnCurso'] = 'inicioPublico';
-    
-    //Importamos la pagina en curso
-    require_once $aControladores[$_SESSION['paginaEnCurso']];
-    
-    //Finalizamos la ejecucion del script
-    exit();
-}
-
-
 //Si el usuario pulsa el botón 'Cerrar Sesion', mando al usuario al inicio Publico
 if (isset($_REQUEST['cerrarSesion'])) {
 
@@ -105,7 +91,7 @@ if ($_COOKIE['idioma'] == 'en') {
     } else {
 
         //Si se ha conectado mas veces le mostramos otro mensaje
-        $ultimaConexion = "ou last logged in on <strong>{$fechaHoraUltimaConexionAnterior}.</strong>";
+        $ultimaConexion = "You last logged in on <strong>{$fechaHoraUltimaConexionAnterior}.</strong>";
     }
 }
 
