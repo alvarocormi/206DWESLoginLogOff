@@ -42,6 +42,9 @@ $aErrores = [
  * La funcion isset() Determina si una variable está definida y no es null .
  */
 if (isset($_REQUEST['enviar'])) {
+    
+    //Guardamos en la sesion la paginaAnterior y le cargamos el login
+    $_SESSION['paginaAnterior']='login';
 
     // Validamos si el usuario existe y es oUsuarioActivo utilizando el metodo 'validarUsuario()' de la clase 'UsuarioPDO'
     $oUsuarioActivo = UsuarioPDO::validarUsuario($_REQUEST['usuario'], $_REQUEST['contrasena']);

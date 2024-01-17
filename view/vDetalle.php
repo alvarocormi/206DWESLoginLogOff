@@ -29,8 +29,15 @@
 
     if (isset($_SESSION)) {
         echo '<br><br><h3>Variable <b>$_SESSION</b></h3>';
-        foreach ($_SESSION as $key => $value) {
-            echo "<b>$key</b>: $value<br>";
+          foreach ($_SESSION as $key => $valor) {
+            if ($key === 'usuario' && $valor instanceof Usuario) {
+                // Accede a las propiedades o métodos del objeto Usuario para obtener la información deseada
+                echo('<pre>');
+                var_dump($_SESSION['usuario']);
+                echo ('</pre>');
+            } else {
+                echo('<u>' . $key . '</u> => <b>' . $valor . '</b><br>');
+            }
         }
     } else {
         echo '<h3>La variable <b>$_SESSION</b> no está definida</h3>';

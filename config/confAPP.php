@@ -14,7 +14,7 @@ require_once 'core/231018libreriaValidacion.php';
 
 require_once 'model/DB.php';
 require_once 'model/DBPDO.php';
-//require_once 'model/ErrorApp.php';
+require_once 'model/ErrorApp.php';
 require_once 'model/Usuario.php';
 require_once 'model/UsuarioDB.php';
 require_once 'model/UsuarioPDO.php';
@@ -25,9 +25,8 @@ $aControladores = [
     'login' => 'controller/cLogin.php',
     'inicioPrivado' => 'controller/cInicioPrivado.php',
     'detalle' => 'controller/cDetalle.php',
-    //'rss' => 'controller/cRSS.php',
-    'wip' => 'controller/cWIP.php'
-    //'error' => 'controller/cError.php'
+    'wip' => 'controller/cWIP.php',
+    'error' => 'controller/cError.php'
 ];
 
 //Creamos un array asociativo para añadir las vistas
@@ -37,7 +36,6 @@ $aVistas = [
     'login' => 'view/vLogin.php',
     'inicioPrivado' => 'view/vInicioPrivado.php',
     'detalle' => 'view/vDetalle.php',
-    //'rss' => 'view/vRSS.php',
-    'wip' => 'view/vWIP.php'
-    //'error' => 'view/vError.php'
+    'wip' => 'view/vWIP.php',
+    'error' => 'view/vError.php'
 ];

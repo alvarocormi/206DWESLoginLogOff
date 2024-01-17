@@ -3,7 +3,7 @@
 /**
  * @author Alvaro Cordero
  * @version 1.0
- * @since 16/01/2024
+ * @since 17/01/2024
  * 
  * @Annotation Proyecto LoginLogoutMulticapaPOO - Clase DBPDO
  * 
@@ -32,11 +32,21 @@ class DBPDO implements DB {
             // Código que se ejecuta si hay algún error
         } catch (PDOException $excepcion) {
 
-            //Mostramos un mensaje de error
-            echo 'Error de ejecucion.';
+            // Asigno a la página en curso la página de error
+            $_SESSION['paginaEnCurso'] = 'error';
 
-            //Finzalizamos la ejecucion del script
-            exit();
+            /**
+             * Creo una variable de SESSION llamada 'error' y almaceno un objeto de la clase ErrorApp
+             * 
+             * En la variable '$_SESSION['paginaAnterior']' almacenamos la página anterior para poder volver una vez visualicemos el error en 'vError.php'
+             */
+            $_SESSION['error'] = new ErrorApp($excepcion->getCode(), $excepcion->getMessage(), $excepcion->getFile(), $excepcion->getLine());
+            
+            //Redirige al usuario al index
+            header('Location: index.php');
+            
+            //Finaliza la ejecucion del script
+            exit;
             
         } finally {
 
