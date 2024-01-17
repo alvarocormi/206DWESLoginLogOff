@@ -12,12 +12,12 @@
 require_once 'core/231018libreriaValidacion.php';
 
 
-//require_once 'model/DB.php';
-//require_once 'model/DBPDO.php';
+require_once 'model/DB.php';
+require_once 'model/DBPDO.php';
 //require_once 'model/ErrorApp.php';
-//require_once 'model/Usuario.php';
-//require_once 'model/UsuarioDB.php';
-//require_once 'model/UsuarioPDO.php';
+require_once 'model/Usuario.php';
+require_once 'model/UsuarioDB.php';
+require_once 'model/UsuarioPDO.php';
 
 //Creamos un array asociativo para añadir los controladores
 $aControladores = [
@@ -26,9 +26,6 @@ $aControladores = [
     'inicioPrivado' => 'controller/cInicioPrivado.php',
     'detalle' => 'controller/cDetalle.php',
     //'rss' => 'controller/cRSS.php',
-    //'registro' => 'controller/cRegistro.php',
-    //'miCuenta' => 'controller/cMiCuenta.php',
-    //'borrarCuenta' => 'controller/cBorrarCuenta.php',
     'wip' => 'controller/cWIP.php'
     //'error' => 'controller/cError.php'
 ];
@@ -41,9 +38,6 @@ $aVistas = [
     'inicioPrivado' => 'view/vInicioPrivado.php',
     'detalle' => 'view/vDetalle.php',
     //'rss' => 'view/vRSS.php',
-    //'registro' => 'view/vRegistro.php',
-    //'miCuenta' => 'view/vMiCuenta.php',
-    //'borrarCuenta' => 'view/vBorrarCuenta.php',
     'wip' => 'view/vWIP.php'
     //'error' => 'view/vError.php'
 ];

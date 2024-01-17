@@ -4,7 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!-- Iconos-->
-        <link rel="shortcut icon" href="../webroot/img/palma.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="../webroot/img/palma.png" type="image/x-icon" />        
+        <link rel="stylesheet" href="./webroot/css/boostrap.css"/>
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap");
             * {

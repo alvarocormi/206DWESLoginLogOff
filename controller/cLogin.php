@@ -4,13 +4,21 @@
  * @author Alvaro Cordero <https://github.com/alvarocormi>
  * @author Ismael Ferreras <https://github.com/IsmaelFG>
  * @version 1.0
- * @since 15-01-2024
+ * @since 16-01-2024
  * 
- * @Annotation Proyecto LoginLogOFF Alvaro Cordero
+ * @Annotation Proyecto LoginLogOFF Alvaro Cordero - Parte Login
  */
+// Verifica si la variable 'cancelar' está definida en la solicitud ($_REQUEST)
 if (isset($_REQUEST['cancelar'])) {
+
+    // Establece la variable de sesión 'paginaEnCurso' en 'inicioPublico'
     $_SESSION['paginaEnCurso'] = 'inicioPublico';
+
+    // Requiere el archivo correspondiente al controlador asociado a 'inicioPublico'
+    // a través del array $aControladores
     require_once $aControladores[$_SESSION['paginaEnCurso']];
+
+    // Finaliza la ejecución del script
     exit();
 }
 
@@ -34,6 +42,16 @@ $aErrores = [
  * La funcion isset() Determina si una variable está definida y no es null .
  */
 if (isset($_REQUEST['enviar'])) {
+
+    // Validamos si el usuario existe y es oUsuarioActivo utilizando el metodo 'validarUsuario()' de la clase 'UsuarioPDO'
+    $oUsuarioActivo = UsuarioPDO::validarUsuario($_REQUEST['usuario'], $_REQUEST['contrasena']);
+
+    // Comprobamos si '$oUsuarioActivo' no esta declarado o es 'null'
+    if (!isset($oUsuarioActivo)) {
+
+        // En caso verdadero cambiamos el valor de '$entradaOK' a 'false'
+        $entradaOK = false;
+    }
     /**
      * Validamos el usuario 
      * Validamos la contrseña
@@ -42,80 +60,24 @@ if (isset($_REQUEST['enviar'])) {
      * comprobarAlfanumerico() -> Funcion que compueba si el parametro recibido esta compuesto por caracteres alfabeticos y numericos conjuntamente.
      * validarPassword() -> Funcion que compueba si el parametro recibido es una contraseña valida.
      */
-    $aErrores['usuario'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['usuario'], 32, 4, 1);
-    $aErrores['contrasena'] = validacionFormularios::validarPassword($_REQUEST['contrasena'], 32, 4, 2, 1);
+    $aErrores = [
+        'usuario' => (!$oUsuarioActivo) ? 'Error de autentificacion.' : validacionFormularios::comprobarAlfaNumerico($_REQUEST['usuario'], 32, 4, 1),
+        'contrasena' => (!$oUsuarioActivo) ? 'Error de autentificacion.' : validacionFormularios::validarPassword($_REQUEST['contrasena'], 32, 4, 2, 1)
+    ];
 
-    //Abrimos un bloque try catch para tener un mejor control de los errores
-    try {
-        /**
-         * @link https://www.php.net/manual/pdo.construct.php
-         * 
-         * Iniciamos la conexion con la base de datos mediante la clase PDO
-         * DNS -> Host de la base de datos
-         * USERNAME -> Usuario de la base de datos
-         * PASSWORD -> Contraseña de la abse de datos
-         */
-        $miDB = new PDO(DSN, USERNAME, PASSWORD);
+    // Recorre aErrores para ver si hay algun error
+    foreach ($aErrores as $campo => $valor) {
 
-        /**
-         * @link https://www.php.net/manual/function.hash.php
-         * 
-         * Creamos una nueva contraseña mediante la funcion hash()
-         * Le pasamos como parametro el usuario y la contraseña
-         * 
-         * hash() -> Generar un valor hash (resumen de mensaje)
-         * Preparamos la consulta de seleccion
-         * Para comprobar que el usuario y la contraseña son correctos
-         */
-        $stmt = $miDB->prepare('SELECT * FROM T01_Usuario WHERE T01_CodUsuario="' . $_REQUEST['usuario'] . '" and T01_Password="' . hash("sha256", ($_REQUEST['usuario'] . $_REQUEST['contrasena'])) . '";');
+        //Si el valor es distinto de null
+        if ($valor != null) {
 
-        //Ejecutamos la consulta
-        $stmt->execute();
-
-        /**
-         * @link https://www.php.net/manual/pdostatement.fetchobject.php
-         * 
-         * Almacenamos el resultado de la query como objetos mediante la funcion fecthObject()
-         * fetchObject() -> Obtiene la siguiente fila y la devuelve como un objeto
-         */
-        $oUsuarioActivo = $stmt->fetchObject();
-
-        //Si no es resultado o no devuelve nada
-        if (!$oUsuarioActivo) {
-
-            //Guardamos un mensaje de error
-            $aErrores['usuario'] = "Error de autenticacion";
-
-            //Ponemos la entradaOk a false
+            //Ponemos la entradaOK a false
             $entradaOK = false;
+
+            // Limpiamos el campo
+            $_REQUEST[$campo] = '';
         }
-
-        // Recorre aErrores para ver si hay algun error
-        foreach ($aErrores as $campo => $valor) {
-
-            //Si el valor es distinto de null
-            if ($valor != null) {
-
-                //Ponemos la entradaOK a false
-                $entradaOK = false;
-
-                // Limpiamos el campo
-                $_REQUEST[$campo] = '';
-            }
-        }
-
-        /**
-         * @link https://www.php.net/manual/class.pdoexception.php
-         * 
-         * Controlamos los errores mediante la clase PDOException
-         * PDOException() -> Representa un error generado por PDO.
-         */
-    } catch (PDOException $exception) {
-        // Si aparecen errores, se muestra por pantalla el error
-        echo ('<div><p>Ha fallado la conexion: ' . $exception->getMessage() . '</p></div>');
     }
-
-
     //Si el usuario no ha pulsado el boton enviar 
 } else {
 
@@ -128,43 +90,18 @@ if ($entradaOK) {
 
     //Abrimos un bloque try catch para tener un mejor control de los errores
     try {
-        //Incrementamos el número de conexiones
-        $numConexionActual = $oUsuarioActivo->T01_NumConexiones + 1;
-
-        /**
-         * Actualizamos la fecha y la hora de la ultima conexion
-         * Lo guardamos en una variable y no lo hacemos directamente en la consulta de actualizacion
-         * Con el objetivo de guardar la fecha y hora de ulima conexion anterioir
-         */
-        $fechaHoraUltimaConexionAnterior = $oUsuarioActivo->T01_FechaHoraUltimaConexion;
+        // Actualizamos la fecha y hora de la última conexión
+        $oUsuarioActivo = UsuarioPDO::registrarUltimaConexion($oUsuarioActivo);
 
         /**
          * Configuramos las sesiones para almacenar los datos del usuario
          * Lo realizamos mediante la variable $_SESSION
          */
-        $_SESSION['usuario'] = $oUsuarioActivo->T01_CodUsuario;
-        $_SESSION['numConexiones'] = $numConexionActual;
-        $_SESSION['ultimaConexion'] = $fechaHoraUltimaConexionAnterior;
-
-        /**
-         * Realizamos la consulta de aztualizacion
-         * Mediante esta consulta vamos a actualizar el numero de conexiones de la base de datos del usuario
-         * Lo realizamos mediante Current_TimeStamp para que nos coga la fecha y la hora actual
-         */
-        $sqlActualizacion = 'UPDATE T01_Usuario SET T01_NumConexiones =' . $numConexionActual . ', T01_FechaHoraUltimaConexion=now() WHERE T01_CodUsuario="' . $_REQUEST['usuario'] . '";';
-
-        //Preparamos la consulta
-        $consultaActualizacion = $miDB->prepare($sqlActualizacion);
-
-        //Se ejecuta la consulta de actualizacion
-        $consultaActualizacion->execute();
-
+        $_SESSION['usuario'] = $oUsuarioActivo;
         $_SESSION['paginaEnCurso'] = 'inicioPrivado';
 
-        /**
-         * Redirigimos al usuario a la pagina Progama.php
-         */
-        header("Location: index.php");
+        //Importamos la sesion se la paginaActiva
+        require_once $aControladores[$_SESSION['paginaEnCurso']];
 
         /**
          * @link https://www.php.net/manual/function.exit.php
@@ -194,7 +131,7 @@ if ($entradaOK) {
 
     //Si el fromulario a sido enviado pero el usuario o contraseña no ha sido valdiado 
 } else {
-    
+
     //Importamos la vista
     require_once $aVistas['layout'];
 }
