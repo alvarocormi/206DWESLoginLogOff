@@ -52,7 +52,7 @@ $numeroConexionesUsuario = $_SESSION['usuario']->getNumAcceso();
 $fechaHoraUltimaConexionAnterior = $_SESSION['usuario']->getFechaHoraUltimaConexionAnterior(); 
 
 
-//Si la cookie seleccionada es la espapola
+//Si la cookie seleccionada es la española
 if ($_COOKIE['idioma'] == 'es') {
     
     //Guaradamos en una variable el mensaje de bienvenida

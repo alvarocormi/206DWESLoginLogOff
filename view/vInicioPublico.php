@@ -7,12 +7,14 @@
     </form>
     <br>
     <div>
-        <a class="boton" href="?idioma=es">
-            <img src="./webroot/img/spain.jpg" alt="es" width="40" height="30">
-        </a>
-        <a class="boton" href="?idioma=en">
-            <img src="./webroot/img/english.png" alt="en" width="40" height="30">
-        </a>
+        <form method="post" action="">
+            <button type="submit" name="spain" value="es" class="btn btn-primary" style="border: 0px; background-color: transparent">
+                <img src="webroot/img/spain.jpg" alt="es" width="40" height="30">
+            </button>
+            <button type="submit" name="english" value="en" class="btn btn-primary" style="border: 0px; background-color: transparent">
+                <img src="webroot/img/english.png" alt="en" width="40" height="30">
+            </button>
+        </form>
     </div>
     <img src="./webroot/img/esquemaAPP.png" alt="" width="650px" style="margin-top: 30px; border: 1px solid black; border-radius: 10px">
 </div>
